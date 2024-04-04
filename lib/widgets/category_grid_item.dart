@@ -5,8 +5,13 @@ import 'package:meals/models/meal.dart';
 import 'package:meals/screens/meals_screen.dart';
 
 class CategoryGridItem extends StatelessWidget {
-  const CategoryGridItem({super.key, required this.category});
+  const CategoryGridItem({
+    super.key,
+    required this.category,
+    required this.toggleMealFavorite,
+  });
 
+  final void Function(Meal meal) toggleMealFavorite;
   final Category category;
 
   @override
@@ -20,6 +25,7 @@ class CategoryGridItem extends StatelessWidget {
           builder: (context) => MealsScreen(
             meals: meals,
             title: category.title,
+            toggleMealFavorite: toggleMealFavorite,
           ),
         ),
       );
