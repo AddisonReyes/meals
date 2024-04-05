@@ -9,10 +9,13 @@ class CategoryGridItem extends StatelessWidget {
     super.key,
     required this.category,
     required this.toggleMealFavorite,
+    required this.filters,
   });
 
   final void Function(Meal meal) toggleMealFavorite;
   final Category category;
+
+  final Map<Filter, bool> filters;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,11 @@ class CategoryGridItem extends StatelessWidget {
 
     for (final meal in dummyMeals) {
       if (meal.categories.contains(category.id)) {
+        // filters[Filter.glutenFree] == meal.isGlutenFree
+        // filters[Filter.vegan] == meal.isVegan
+        // filters[Filter.vegetarian] == meal.isVegetarian
+        // filters[Filter.lactoseFree] == meal.isLactoseFree
+
         meals.add(meal);
       }
     }

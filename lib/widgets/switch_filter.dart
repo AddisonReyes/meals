@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/data/dummy_data.dart';
 
 // ignore: must_be_immutable
 class SwitchFilter extends StatefulWidget {
@@ -7,14 +8,16 @@ class SwitchFilter extends StatefulWidget {
     required this.filterSet,
     required this.title,
     required this.subtitle,
-    required this.changeVal,
+    required this.onChange,
+    required this.filter,
   });
 
   bool filterSet;
   final String title;
   final String subtitle;
 
-  void Function() changeVal;
+  void Function(Filter filter) onChange;
+  Filter filter;
 
   @override
   State<SwitchFilter> createState() => _SwitchFilterState();
@@ -23,13 +26,14 @@ class SwitchFilter extends StatefulWidget {
 class _SwitchFilterState extends State<SwitchFilter> {
   @override
   Widget build(BuildContext context) {
+    // print(widget.filterSet);
     return SwitchListTile(
       value: widget.filterSet,
       onChanged: (isChecked) {
         setState(() {
           widget.filterSet = isChecked;
         });
-        widget.changeVal();
+        widget.onChange(widget.filter);
       },
       title: Text(
         widget.title,

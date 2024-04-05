@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screens/categories_screen.dart';
 import 'package:meals/screens/filters_screen.dart';
@@ -13,10 +14,17 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  final List<Meal> _favoritesMeals = [];
+
+  Map<Filter, bool> filters = {
+    Filter.glutenFree: false,
+    Filter.lactoseFree: false,
+    Filter.vegetarian: false,
+    Filter.vegan: false,
+  };
+
   String appBarTitle = "Categories";
   int _selectedPageIndex = 0;
-
-  final List<Meal> _favoritesMeals = [];
 
   void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -49,25 +57,40 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  void _setScreen(String identinfier) async {
+  void updateFiltersMap(Map<Filter, bool> newFilters) {
+    setState(() {
+      filters = newFilters;
+    });
+    _showInfoMessage('Filters updated!');
+  }
+
+  void _setScreen(String identinfier) {
     Navigator.of(context).pop();
     if (identinfier == 'filters') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
-          MaterialPageRoute(builder: (ctx) => const FiltersScreen()));
-
-      print(result);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => FiltersScreen(
+            updateFilters: updateFiltersMap,
+            filters: filters,
+          ),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage =
-        CategoriesScreen(toggleMealFavorite: _toggleMealFavoriteStatus);
+    Widget activePage = CategoriesScreen(
+      toggleMealFavorite: _toggleMealFavoriteStatus,
+      filters: filters,
+    );
 
     switch (_selectedPageIndex) {
       case 0:
-        activePage =
-            CategoriesScreen(toggleMealFavorite: _toggleMealFavoriteStatus);
+        activePage = CategoriesScreen(
+          toggleMealFavorite: _toggleMealFavoriteStatus,
+          filters: filters,
+        );
         setState(() {
           appBarTitle = "Categories";
         });
