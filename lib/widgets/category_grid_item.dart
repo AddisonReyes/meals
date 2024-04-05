@@ -36,10 +36,10 @@ class CategoryGridItem extends StatelessWidget {
 
     for (final meal in dummyMeals) {
       if (meal.categories.contains(category.id)) {
-        // filters[Filter.glutenFree] == meal.isGlutenFree
-        // filters[Filter.vegan] == meal.isVegan
-        // filters[Filter.vegetarian] == meal.isVegetarian
-        // filters[Filter.lactoseFree] == meal.isLactoseFree
+        if (filters[Filter.lactoseFree]! && !meal.isLactoseFree) continue;
+        if (filters[Filter.glutenFree]! && !meal.isGlutenFree) continue;
+        if (filters[Filter.vegetarian]! && !meal.isVegetarian) continue;
+        if (filters[Filter.vegan]! && !meal.isVegan) continue;
 
         meals.add(meal);
       }
