@@ -1,29 +1,27 @@
+import 'package:meals/providers/filters_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:meals/data/dummy_data.dart';
 
 // ignore: must_be_immutable
-class SwitchFilter extends StatefulWidget {
+class SwitchFilter extends ConsumerStatefulWidget {
   SwitchFilter({
     super.key,
     required this.filterSet,
     required this.title,
     required this.subtitle,
-    required this.onChange,
     required this.filter,
   });
 
   bool filterSet;
   final String title;
   final String subtitle;
-
-  void Function(Filter filter) onChange;
-  Filter filter;
+  final Filter filter;
 
   @override
-  State<SwitchFilter> createState() => _SwitchFilterState();
+  ConsumerState<SwitchFilter> createState() => _SwitchFilterState();
 }
 
-class _SwitchFilterState extends State<SwitchFilter> {
+class _SwitchFilterState extends ConsumerState<SwitchFilter> {
   @override
   Widget build(BuildContext context) {
     // print(widget.filterSet);
@@ -32,8 +30,11 @@ class _SwitchFilterState extends State<SwitchFilter> {
       onChanged: (isChecked) {
         setState(() {
           widget.filterSet = isChecked;
+
+          ref
+              .read(filtersProvider.notifier)
+              .setFilter(widget.filter, widget.filterSet);
         });
-        widget.onChange(widget.filter);
       },
       title: Text(
         widget.title,

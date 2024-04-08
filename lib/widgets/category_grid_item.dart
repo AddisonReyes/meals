@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/category.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/providers/filters_providers.dart';
 import 'package:meals/screens/meals_screen.dart';
 
-class CategoryGridItem extends StatelessWidget {
+class CategoryGridItem extends ConsumerWidget {
   const CategoryGridItem({
     super.key,
     required this.category,
-    required this.toggleMealFavorite,
-    required this.filters,
   });
 
-  final void Function(Meal meal) toggleMealFavorite;
   final Category category;
 
-  final Map<Filter, bool> filters;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filters = ref.watch(filtersProvider);
     List<Meal> meals = [];
 
     void selectCategory() {
@@ -28,7 +26,6 @@ class CategoryGridItem extends StatelessWidget {
           builder: (context) => MealsScreen(
             meals: meals,
             title: category.title,
-            toggleMealFavorite: toggleMealFavorite,
           ),
         ),
       );

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/category.dart';
 import 'package:meals/models/meal.dart';
 
-enum Filter { glutenFree, lactoseFree, vegetarian, vegan }
-
 const availableCategories = [
   Category(
     id: 'c1',

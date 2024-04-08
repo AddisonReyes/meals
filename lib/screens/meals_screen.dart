@@ -7,10 +7,7 @@ class MealsScreen extends StatelessWidget {
     super.key,
     this.title,
     required this.meals,
-    required this.toggleMealFavorite,
   });
-
-  final void Function(Meal meal) toggleMealFavorite;
 
   final String? title;
   final List<Meal> meals;
@@ -21,7 +18,6 @@ class MealsScreen extends StatelessWidget {
       itemCount: meals.length,
       itemBuilder: (context, index) {
         return MealItem(
-          toggleMealFavorite: toggleMealFavorite,
           meal: meals[index],
         );
       },

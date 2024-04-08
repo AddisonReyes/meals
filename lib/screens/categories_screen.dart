@@ -1,4 +1,3 @@
-import 'package:meals/models/meal.dart';
 import 'package:meals/widgets/category_grid_item.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +5,7 @@ import 'package:flutter/material.dart';
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({
     super.key,
-    required this.toggleMealFavorite,
-    required this.filters,
   });
-
-  final void Function(Meal meal) toggleMealFavorite;
-  final Map<Filter, bool> filters;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +20,7 @@ class CategoriesScreen extends StatelessWidget {
       children: [
         for (final category in availableCategories)
           CategoryGridItem(
-            filters: filters,
             category: category,
-            toggleMealFavorite: toggleMealFavorite,
           )
       ],
     );
